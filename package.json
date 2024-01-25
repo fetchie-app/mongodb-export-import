@@ -1,0 +1,33 @@
+{
+  "name": "mongodb-exi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/cmd/index.ts",
+  "bin": {
+    "mxi": "./src/cmd/index.ts"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx ./src/cmd/index.ts",
+    "start": "tsx ./src/cmd/index.ts",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "commander": "^11.1.0",
+    "enquirer": "^2.4.1",
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "listr2": "^8.0.1",
+    "mongo-url-parser": "^1.0.2",
+    "mongoose": "^8.1.0",
+    "ora": "^8.0.1",
+    "tsx": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.6",
+    "typescript": "^5.3.3"
+  }
+}
