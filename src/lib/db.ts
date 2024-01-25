@@ -49,13 +49,17 @@ async function saveColelction(
 // insert collection data
 
 async function insertCollection(name: string, data: any) {
+  try {
+    await mongoose.connection.db.createCollection(name);
+  } catch (e) {}
   let collection = await mongoose.connection.db.collection(name);
 
   let jsonData: any[] = json.parseJSONArray(data);
 
   if (!jsonData?.length) return 0;
-  // delete existing items
+
   await collection.deleteMany({});
+  // delete existing items
   // insert new items
   await collection.insertMany(jsonData);
 
