@@ -2,7 +2,7 @@ import ora from "ora";
 import db from "./db";
 import urlParser from "mongo-url-parser";
 import { prompt } from "enquirer";
-import { Collection, Document } from "mongoose";
+import fs from "./fs";
 
 type AsyncResponse<T = any> = {
   data: T;
@@ -24,6 +24,7 @@ async function dbConnect(url: string, newDb = false) {
   } catch (e) {
     loading.fail(`Database connection failed`);
     loading.stop();
+
     result["error"] = e?.message;
     return result;
   }
@@ -39,7 +40,6 @@ async function dbConnect(url: string, newDb = false) {
     .filter((v) => !["admin", "config", "local"].includes(v));
 
   if (!dbnames?.includes(dbName) && !newDb) {
-    console.log("Select db");
     //TODO: Select db
 
     if (dbnames?.length) {
@@ -88,6 +88,7 @@ async function selectBackupCollection() {
     type: "confirm",
     name: "all",
     message: "Backup all collections?",
+    initial: true,
   });
 
   if (backaupMode.all) {
@@ -108,4 +109,16 @@ async function selectBackupCollection() {
   return selectedCol;
 }
 
-export default { dbConnect, selectBackupCollection };
+async function removeLocalFiles(path: string) {
+  let ans = await prompt<{ yes: boolean }>({
+    message: "Remove local backup files",
+    type: "confirm",
+    initial: false,
+    name: "yes",
+  });
+  if (ans.yes) {
+    await fs.removeDir(path);
+  }
+}
+
+export default { dbConnect, selectBackupCollection, removeLocalFiles };

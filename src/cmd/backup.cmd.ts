@@ -11,7 +11,6 @@ export const backupCmd = program
   .action(async (dburl) => {
     let backupPath = fs.getDirPath("bkp");
     await fs.checkDirecotry(backupPath);
-    console.log("Backup mongodb -> ", dburl, __dirname);
 
     // Connect
     await tui.dbConnect(dburl);

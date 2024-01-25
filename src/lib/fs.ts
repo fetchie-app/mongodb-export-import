@@ -1,7 +1,7 @@
 import { ensureDir, pathExistsSync } from "fs-extra";
 import { join, basename, parse } from "path";
 import glob from "fast-glob";
-import { readFile } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 
 async function scanFiles(
   basePath: string = process.cwd(),
@@ -23,6 +23,10 @@ function getFileName(path: string) {
   return parse(path).name;
 }
 
+async function removeDir(path: string) {
+  await rm(path, { recursive: true, force: true });
+}
+
 export default {
   checkDirecotry,
   getDirPath,
@@ -31,4 +35,5 @@ export default {
   readFile,
   basename,
   getFileName,
+  removeDir,
 };

@@ -43,7 +43,11 @@ export const restoreCmd = program
     );
 
     await tasks.run().catch(() => {});
+    await db.disconnect();
+
+    // Remove
+
+    await tui.removeLocalFiles(backupPath);
 
     // disconnect
-    await db.disconnect();
   });
